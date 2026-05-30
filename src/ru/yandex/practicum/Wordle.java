@@ -5,7 +5,6 @@ import ru.yandex.practicum.WordNotInDictionaryException;
 import ru.yandex.practicum.WordNotFoundException;
 
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
