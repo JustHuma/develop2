@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="67a8bdf1-3cc8-4977-8dd6-9dec528d30eb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/ru/yandex/practicum/WordleDictionaryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/yandex/practicum/Wordle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/yandex/practicum/Wordle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/yandex/practicum/WordleDictionary.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ru/yandex/practicum/WordleGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ru/yandex/practicum/WordleGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/ru/yandex/practicum/WordleTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/test/ru/yandex/practicum/WordleTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +35,7 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.restore.workspace.module": "true",
     "git-widget-placeholder": "develop",
