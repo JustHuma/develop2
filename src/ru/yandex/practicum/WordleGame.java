@@ -18,6 +18,7 @@ public class WordleGame {
     private final Set<Character> correctLetters;
     private final Set<Character> misplacedLetters;
     private final Set<Character> wrongLetters;
+    private final Set<String> usedHints;
 
     public WordleGame(WordleDictionary dictionary) {
         this.dictionary = dictionary;
@@ -27,6 +28,7 @@ public class WordleGame {
         this.correctLetters = new HashSet<>();
         this.misplacedLetters = new HashSet<>();
         this.wrongLetters = new HashSet<>();
+        this.usedHints = new HashSet<>();
     }
 
     public String getAnswer() {
@@ -64,7 +66,6 @@ public class WordleGame {
         char[] hint = new char[WORD_LENGTH];
         Arrays.fill(hint, '-');
 
-        // Сначала отмечаем точные совпадения (+)
         boolean[] usedInAnswer = new boolean[WORD_LENGTH];
         for (int i = 0; i < WORD_LENGTH; i++) {
             if (guess.charAt(i) == answer.charAt(i)) {
@@ -74,7 +75,6 @@ public class WordleGame {
             }
         }
 
-        // Затем отмечаем буквы, которые есть в слове, но не на этом месте (^)
         for (int i = 0; i < WORD_LENGTH; i++) {
             if (hint[i] == '+') continue;
 
@@ -97,7 +97,9 @@ public class WordleGame {
 
     public String getHintWord() {
         List<String> possibleWords = dictionary.getAllWords().stream()
-                .filter(word -> matchesCurrentKnowledge(word))
+                .filter(word -> !history.contains(word))
+                .filter(word -> !usedHints.contains(word))
+                .filter(this::matchesCurrentKnowledge)
                 .collect(Collectors.toList());
 
         if (possibleWords.isEmpty()) {
@@ -105,29 +107,26 @@ public class WordleGame {
         }
 
         Random random = new Random();
-        return possibleWords.get(random.nextInt(possibleWords.size()));
+        String hint = possibleWords.get(random.nextInt(possibleWords.size()));
+        usedHints.add(hint);
+        return hint;
     }
 
     private boolean matchesCurrentKnowledge(String word) {
-        // Проверяем, что слово не было уже введено
         if (history.contains(word)) return false;
 
-        // Проверяем, что слово содержит все правильно угаданные буквы на правильных позициях
         for (int i = 0; i < WORD_LENGTH; i++) {
             char answerChar = answer.charAt(i);
             char wordChar = word.charAt(i);
-            // Если буква на позиции угадана, в слове должна быть такая же
             if (correctLetters.contains(answerChar) && wordChar != answerChar) {
                 return false;
             }
         }
 
-        // Проверяем, что слово содержит все перемещённые буквы
         for (char c : misplacedLetters) {
             if (!word.contains(String.valueOf(c))) return false;
         }
 
-        // Проверяем, что слово не содержит заведомо неправильные буквы
         for (char c : wrongLetters) {
             if (word.contains(String.valueOf(c))) return false;
         }

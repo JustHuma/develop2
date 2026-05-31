@@ -5,6 +5,7 @@ import ru.yandex.practicum.WordNotInDictionaryException;
 import ru.yandex.practicum.WordNotFoundException;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
@@ -15,31 +16,23 @@ public class Wordle {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        try {
-            // Создаём лог-файл
-            log = new PrintWriter(new FileWriter("wordle.log", StandardCharsets.UTF_8));
+        try (PrintWriter writer = new PrintWriter(new FileWriter("wordle.log", StandardCharsets.UTF_8))) {
+            log = writer;
+            logMessage("Программа запущена");
 
-            // Загружаем словарь
             WordleDictionaryLoader loader = new WordleDictionaryLoader();
             WordleDictionary dictionary = loader.loadDictionary("words.txt");
             logMessage("Словарь загружен. Слов в словаре: " + dictionary.size());
 
-            // Создаём игру
             WordleGame game = new WordleGame(dictionary);
-
-            // Запускаем игровой цикл
             playGame(game);
 
         } catch (WordNotFoundException e) {
-            logError(e.getMessage(), e);
             System.err.println("Ошибка: " + e.getMessage());
+            if (log != null) logMessage("Ошибка: " + e.getMessage());
         } catch (Exception e) {
-            logError("Неожиданная ошибка", e);
             System.err.println("Произошла ошибка. Подробности в логе.");
-        } finally {
-            if (log != null) {
-                log.close();
-            }
+            if (log != null) e.printStackTrace(log);
         }
     }
 
@@ -54,7 +47,6 @@ public class Wordle {
             System.out.print("Введите слово: ");
             String input = scanner.nextLine().trim().toLowerCase().replace('ё', 'е');
 
-            // Обработка пустого ввода (запрос подсказки)
             if (input.isEmpty()) {
                 String hintWord = game.getHintWord();
                 if (hintWord == null) {
@@ -83,12 +75,11 @@ public class Wordle {
                 System.out.println(e.getMessage());
                 logMessage("Слово не в словаре: " + input);
             } catch (Exception e) {
-                logError("Ошибка при обработке хода", e);
+                logMessage("Ошибка при обработке хода: " + e.getMessage());
                 System.out.println("Произошла ошибка. Попробуйте снова.");
             }
         }
 
-        // Игра закончилась без победы
         System.out.println("Вы проиграли. Загаданное слово: " + game.getAnswer());
         logMessage("Игра завершена поражением. Загаданное слово: " + game.getAnswer());
     }
@@ -96,14 +87,6 @@ public class Wordle {
     private static void logMessage(String message) {
         if (log != null) {
             log.println(message);
-            log.flush();
-        }
-    }
-
-    private static void logError(String message, Throwable e) {
-        if (log != null) {
-            log.println("ОШИБКА: " + message);
-            e.printStackTrace(log);
             log.flush();
         }
     }
